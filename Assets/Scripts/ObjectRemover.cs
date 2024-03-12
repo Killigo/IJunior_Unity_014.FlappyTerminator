@@ -6,10 +6,12 @@ public class ObjectRemover : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.TryGetComponent(out GameObject poolObject))
+        Debug.Log("target");
+
+        if (collider.TryGetComponent(out Bullet poolObject))
         {
             Debug.Log(poolObject.gameObject.name);
-            _pool.PutObject(poolObject);
+            _pool.PutObject(poolObject.gameObject);
         }
     }
 }

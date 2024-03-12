@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    [SerializeField] private Transform _container;
     [SerializeField] private GameObject _prefab;
 
     private Queue<GameObject> _pool;
@@ -20,12 +19,15 @@ public class ObjectPool : MonoBehaviour
         if (_pool.Count == 0)
         {
             GameObject poolObject = Instantiate(_prefab);
-            poolObject.transform.parent = _container;
+            poolObject.transform.parent = transform;
 
             return poolObject;
         }
 
-        return _pool.Dequeue();
+        GameObject returnObject = _pool.Dequeue();
+        returnObject.SetActive(true);
+
+        return returnObject;
     }
 
     public void PutObject(GameObject poolObject)

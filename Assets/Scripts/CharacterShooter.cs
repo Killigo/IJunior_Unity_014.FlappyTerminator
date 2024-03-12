@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class CharacterShooter : MonoBehaviour
+public abstract class CharacterShooter : MonoBehaviour
 {
-    [SerializeField] private Bullet _bullet;
     [SerializeField] private Transform _shootPoint;
     [SerializeField] private ObjectPool _pool;
 
