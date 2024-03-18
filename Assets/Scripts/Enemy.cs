@@ -1,21 +1,25 @@
+using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private ObjectPool _enemyPool;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Start()
     {
-        Debug.Log(gameObject.name + " OnTriggerEnter2D");
+        _enemyPool = GetComponentInParent<ObjectPool>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out Bullet bullet))
+        if (collision.gameObject.TryGetComponent(out PlayerBullet bullet))
         {
-            Debug.Log(gameObject.name + " die");
+            Die();
         }
+    }
 
-        Destroy(collision.gameObject);
-        Destroy(gameObject);
+    public void Die()
+    {
+        _enemyPool.PutObject(gameObject);
     }
 }

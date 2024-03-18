@@ -3,28 +3,29 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    [SerializeField] private GameObject _prefab;
+    [SerializeField] protected Transform container;
+    [SerializeField] protected GameObject prefab;
 
-    private Queue<GameObject> _pool;
+    protected Queue<GameObject> pool;
 
-    public IEnumerable<GameObject> PooledObject => _pool;
+    public IEnumerable<GameObject> PooledObject => pool;
 
     private void Awake()
     {
-        _pool = new Queue<GameObject>();
+        pool = new Queue<GameObject>();
     }
 
     public GameObject GetObject()
     {
-        if (_pool.Count == 0)
+        if (pool.Count == 0)
         {
-            GameObject poolObject = Instantiate(_prefab);
-            poolObject.transform.parent = transform;
+            GameObject poolObject = Instantiate(prefab);
+            poolObject.transform.parent = container;
 
             return poolObject;
         }
 
-        GameObject returnObject = _pool.Dequeue();
+        GameObject returnObject = pool.Dequeue();
         returnObject.SetActive(true);
 
         return returnObject;
@@ -32,12 +33,12 @@ public class ObjectPool : MonoBehaviour
 
     public void PutObject(GameObject poolObject)
     {
-        _pool.Enqueue(poolObject);
-        poolObject.gameObject.SetActive(false);
+        pool.Enqueue(poolObject);
+        poolObject.SetActive(false);
     }
 
     public void Reset()
     {
-        _pool.Clear();
+        pool.Clear();
     }
 }

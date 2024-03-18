@@ -3,11 +3,11 @@ using UnityEngine;
 public abstract class CharacterShooter : MonoBehaviour
 {
     [SerializeField] private Transform _shootPoint;
-    [SerializeField] private ObjectPool _pool;
+    [SerializeField] protected ObjectPool _bulletPool;
 
     protected void Shoot()
     {
-        GameObject bullet = _pool.GetObject();
+        GameObject bullet = _bulletPool.GetObject();
         bullet.transform.position = _shootPoint.position;
     }
 }

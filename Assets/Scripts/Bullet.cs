@@ -1,15 +1,14 @@
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public abstract class Bullet : MonoBehaviour
 {
     [SerializeField] protected float Speed = 5f;
 
-    private ObjectPool _pool;
+    private ObjectPool _bulletPool;
 
     private void Start()
     {
-        _pool = GetComponentInParent<ObjectPool>();
+        _bulletPool = GetComponentInParent<ObjectPool>();
     }
 
     private void Update()
@@ -17,15 +16,19 @@ public abstract class Bullet : MonoBehaviour
         Move();
     }
 
-    public void OnBecameInvisible()
+    private void OnBecameInvisible()
     {
-        _pool.PutObject(gameObject);
+        _bulletPool.PutObject(gameObject);
     }
 
     protected abstract void Move();
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _pool.PutObject(gameObject);
+        if (collision.gameObject.TryGetComponent(out Enemy enemy))
+        {
+            enemy.Die();
+            _bulletPool.PutObject(gameObject);
+        }
     }
 }
