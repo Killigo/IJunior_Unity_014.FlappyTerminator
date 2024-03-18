@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 
 public class EnemyShooter : MonoBehaviour
 {
@@ -7,7 +9,7 @@ public class EnemyShooter : MonoBehaviour
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private Transform _shootPoint;
 
-    protected ObjectPool BulletPool;
+    private ObjectPool _bulletPool;
 
     private void Start()
     {
@@ -34,12 +36,18 @@ public class EnemyShooter : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject bullet = BulletPool.GetObject();
+        GameObject bullet = _bulletPool.GetObject();
         bullet.transform.position = _shootPoint.position;
+        bullet.GetComponent<EnemyBullet>().Died += OnDied;
+    }
+
+    private void OnDied()
+    {
+        _bulletPool.PutObject(gameObject);
     }
 
     public void SetBulletPool(ObjectPool pool)
     {
-        BulletPool = pool;
+        _bulletPool = pool;
     }
 }

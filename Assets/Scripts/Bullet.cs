@@ -1,15 +1,18 @@
+using System;
 using UnityEngine;
 
 public abstract class Bullet : MonoBehaviour
 {
     [SerializeField] protected float Speed = 5f;
 
-    private ObjectPool _bulletPool;
+    public event Action Died;
 
-    private void Start()
-    {
-        _bulletPool = GetComponentInParent<ObjectPool>();
-    }
+    //private ObjectPool _bulletPool;
+
+    //private void Start()
+    //{
+    //    _bulletPool = GetComponentInParent<ObjectPool>();
+    //}
 
     private void Update()
     {
@@ -18,7 +21,8 @@ public abstract class Bullet : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        _bulletPool.PutObject(gameObject);
+        Died?.Invoke();
+        //_bulletPool.PutObject(gameObject);
     }
 
     protected abstract void Move();
@@ -28,7 +32,8 @@ public abstract class Bullet : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Enemy enemy))
         {
             enemy.Die();
-            _bulletPool.PutObject(gameObject);
+            Died?.Invoke();
+            //_bulletPool.PutObject(gameObject);
         }
     }
 }
