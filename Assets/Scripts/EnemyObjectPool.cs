@@ -11,7 +11,7 @@ public class EnemyObjectPool : ObjectPool
             GameObject poolObject = Instantiate(prefab);
             poolObject.transform.parent = container;
 
-            EnemyShooter enemyShooter = poolObject.GetComponent<EnemyShooter>();
+            EnemyWeapon enemyShooter = poolObject.GetComponent<EnemyWeapon>();
             enemyShooter.SetBulletPool(_bulletPool);
 
             return poolObject;

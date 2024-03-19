@@ -5,7 +5,7 @@ public abstract class Bullet : MonoBehaviour
 {
     [SerializeField] protected float Speed = 5f;
 
-    public event Action Died;
+    public event Action<GameObject> Destroyed;
 
     //private ObjectPool _bulletPool;
 
@@ -21,7 +21,7 @@ public abstract class Bullet : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        Died?.Invoke();
+        Destroyed?.Invoke(gameObject);
         //_bulletPool.PutObject(gameObject);
     }
 
@@ -32,7 +32,7 @@ public abstract class Bullet : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Enemy enemy))
         {
             enemy.Die();
-            Died?.Invoke();
+            Destroyed?.Invoke(gameObject);
             //_bulletPool.PutObject(gameObject);
         }
     }
