@@ -1049,7 +1049,7 @@ GameObject:
   - component: {fileID: 2052723284}
   - component: {fileID: 2052723283}
   m_Layer: 0
-  m_Name: EnemyGenerator
+  m_Name: EnemyManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1067,8 +1067,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7792bc71ba7849d469b0d46f799ccb66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpawnPositionY: 3
-  _minSpawnPositionY: -3
+  _upperBound: 3
+  _lowerBound: -3
   _enemyPool: {fileID: 2032457760}
   _enemyBulletPool: {fileID: 1480704711}
   _spawnDelay: 3
@@ -1152,7 +1152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7965702712107046250, guid: e38d50a635a525b46b7a331ce116c062, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e38d50a635a525b46b7a331ce116c062, type: 3}

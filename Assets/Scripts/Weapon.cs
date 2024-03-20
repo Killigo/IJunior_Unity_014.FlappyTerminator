@@ -10,29 +10,13 @@ public abstract class Weapon : MonoBehaviour
     {
         GameObject bullet = BulletPool.GetObject();
         bullet.transform.position = _shootPoint.position;
-        bullet.GetComponent<Bullet>().Destroyed += OnDestroyed; // ãäå îòïèñûâàòüñÿ?
+        bullet.GetComponent<Bullet>().Destroyed += OnDestroyed;
     }
-/*
-    protected void Shoot()
-    {
-        GameObject bullet = BulletPool.GetObject();
-        bullet.transform.position = _shootPoint.position;
-        Bullet bulletComponent = bullet.GetComponent<Bullet>();
-        bulletComponent.Destroyed += OnDestroyed;
-    }*/
 
     private void OnDestroyed(GameObject gameObject)
     {
+        Bullet bullet = gameObject.GetComponent<Bullet>();
+        bullet.Destroyed -= OnDestroyed;
         BulletPool.PutObject(gameObject);
     }
-/*
-    private void OnDestroyed(GameObject gameObject)
-    {
-        Bullet bulletComponent = gameObject.GetComponent<Bullet>();
-        if (bulletComponent != null)
-        {
-            bulletComponent.Destroyed -= OnDestroyed;
-        }
-        BulletPool.PutObject(gameObject);
-    }*/
 }

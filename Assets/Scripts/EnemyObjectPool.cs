@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyObjectPool : ObjectPool
 {
-    public GameObject GetObject(ObjectPool _bulletPool)
+    public GameObject GetObject(ObjectPool bulletPool)
     {
         if (pool.Count == 0)
         {
             GameObject poolObject = Instantiate(prefab);
             poolObject.transform.parent = container;
 
-            EnemyWeapon enemyShooter = poolObject.GetComponent<EnemyWeapon>();
-            enemyShooter.SetBulletPool(_bulletPool);
+            EnemyWeapon weapon = poolObject.GetComponent<EnemyWeapon>();
+            weapon.SetBulletPool(bulletPool);
 
             return poolObject;
         }

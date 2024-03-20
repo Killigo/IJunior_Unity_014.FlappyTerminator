@@ -1,13 +1,25 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyWeapon))]
 public class Enemy : MonoBehaviour
 {
-    private ObjectPool _enemyPool;
+    [SerializeField] private float initialShootDelay = 2f;
+
+    private EnemyWeapon _weapon;
+    private Coroutine _shootCoroutine;
+
+    public event Action<GameObject> Died;
 
     private void Start()
     {
-        _enemyPool = GetComponentInParent<ObjectPool>();
+        _weapon = GetComponent<EnemyWeapon>();
+    }
+
+    private void OnEnable()
+    {
+        _shootCoroutine = StartCoroutine(StartShooting());
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -18,8 +30,16 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private IEnumerator StartShooting()
+    {
+        yield return new WaitForSeconds(initialShootDelay);
+
+        StartCoroutine(_weapon.ShootContinuously());
+    }
+
     public void Die()
     {
-        _enemyPool.PutObject(gameObject);
+        StopCoroutine(_shootCoroutine);
+        Died?.Invoke(gameObject);
     }
 }

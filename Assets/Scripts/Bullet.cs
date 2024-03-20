@@ -7,13 +7,6 @@ public abstract class Bullet : MonoBehaviour
 
     public event Action<GameObject> Destroyed;
 
-    //private ObjectPool _bulletPool;
-
-    //private void Start()
-    //{
-    //    _bulletPool = GetComponentInParent<ObjectPool>();
-    //}
-
     private void Update()
     {
         Move();
@@ -22,7 +15,6 @@ public abstract class Bullet : MonoBehaviour
     private void OnBecameInvisible()
     {
         Destroyed?.Invoke(gameObject);
-        //_bulletPool.PutObject(gameObject);
     }
 
     protected abstract void Move();
@@ -33,7 +25,6 @@ public abstract class Bullet : MonoBehaviour
         {
             enemy.Die();
             Destroyed?.Invoke(gameObject);
-            //_bulletPool.PutObject(gameObject);
         }
     }
 }
