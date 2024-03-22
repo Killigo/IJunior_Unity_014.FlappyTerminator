@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public abstract class Bullet : MonoBehaviour
+public abstract class Bullet : MonoBehaviour, IDead
 {
     [SerializeField] protected float Speed = 5f;
 
@@ -26,5 +26,10 @@ public abstract class Bullet : MonoBehaviour
             enemy.Die();
             Destroyed?.Invoke(gameObject);
         }
+    }
+
+    public void Die()
+    {
+        Destroyed?.Invoke(gameObject);
     }
 }
