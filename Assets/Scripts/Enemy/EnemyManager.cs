@@ -23,7 +23,7 @@ public class EnemyManager : MonoBehaviour
         StopCoroutine(_spawnCoroutine);
     }
 
-    IEnumerator SpawnEnemyContinuously()
+    private IEnumerator SpawnEnemyContinuously()
     {
         WaitForSeconds delay = new WaitForSeconds(_spawnDelay);
 
